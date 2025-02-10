@@ -2,10 +2,12 @@ version: '3'
 services:
   strapi_cms:
     container_name: strapi_cms
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
     image: strapi_cms:latest
     restart: unless-stopped
-    env_file: .env
+    env_file: .env.production
     environment:
       DATABASE_CLIENT: ${DATABASE_CLIENT}
       DATABASE_HOST: ${DATABASE_HOST}
