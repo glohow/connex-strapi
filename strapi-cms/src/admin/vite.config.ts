@@ -9,7 +9,11 @@ export default (config: UserConfig) => {
           '/opt/node_modules',// this is the abs path OUTSIDE the project root causing the Vite error
           '/opt/app',
         ],
-      }
-    }
+      },
+      hmr: {
+        host: 'localhost',
+        Port: 1337,
+    },
+    },
   });
 };
