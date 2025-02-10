@@ -11,7 +11,7 @@ export default (config: UserConfig) => {
         ],
       },
       hmr: {
-        host: 'localhost',
+        host: '172.18.0.3',
         Port: 1337,
     },
     },
