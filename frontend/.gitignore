@@ -41,6 +41,5 @@ yarn-error.log*
 next-env.d.ts
 
 # codegen graphQL
-/src/__generated__
 graphql.schema.json
 schema.graphql
