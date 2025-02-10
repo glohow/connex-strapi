@@ -2,7 +2,7 @@ export default ({ env }) => ({
 	connection: {
 		client: 'mysql',
 		connection: {
-		host: env('DATABASE_HOST', '172.18.0.2'),
+		host: env('DATABASE_HOST', '127.0.0.1'),
 			port: env.int('DATABASE_PORT', 3306),
 			database: env('DATABASE_NAME', 'connex_db'),
 			user: env('DATABASE_USERNAME', 'root'),
