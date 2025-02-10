@@ -38,12 +38,12 @@ ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 # Generate the GraphQL types by codegen
-RUN \
-  if [ -f yarn.lock ]; then yarn codegen; \
-  elif [ -f package-lock.json ]; then npm run codegen; \
-  elif [ -f pnpm-lock.yaml ]; then pnpm codegen; \
-  else npm run codegen; \
-  fi
+# RUN \
+#   if [ -f yarn.lock ]; then yarn codegen; \
+#   elif [ -f package-lock.json ]; then npm run codegen; \
+#   elif [ -f pnpm-lock.yaml ]; then pnpm codegen; \
+#   else npm run codegen; \
+#   fi
 
 # Build Next.js based on the preferred package manager
 RUN \
