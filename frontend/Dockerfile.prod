@@ -20,6 +20,9 @@ RUN \
 
 COPY src ./src
 COPY public ./public
+COPY codegen .
+COPY manifest.ts .
+COPY envConfig.ts .
 COPY next.config.ts .
 COPY tsconfig.json .
 
@@ -33,6 +36,14 @@ ENV NEXT_PUBLIC_ENV_VARIABLE=${NEXT_PUBLIC_ENV_VARIABLE}
 # Next.js collects completely anonymous telemetry data about general usage. Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line to disable telemetry at build time
 # ENV NEXT_TELEMETRY_DISABLED 1
+
+# Generate the GraphQL types by codegen
+RUN \
+  if [ -f yarn.lock ]; then yarn codegen; \
+  elif [ -f package-lock.json ]; then npm run codegen; \
+  elif [ -f pnpm-lock.yaml ]; then pnpm codegen; \
+  else npm run codegen; \
+  fi
 
 # Build Next.js based on the preferred package manager
 RUN \
