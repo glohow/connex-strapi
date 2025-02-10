@@ -20,7 +20,7 @@ RUN \
 
 COPY src ./src
 COPY public ./public
-COPY codegen .
+COPY codegen.ts .
 COPY manifest.ts .
 COPY envConfig.ts .
 COPY next.config.ts .
