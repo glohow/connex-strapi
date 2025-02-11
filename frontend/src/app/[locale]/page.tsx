@@ -1,8 +1,3 @@
-import ContactUs from "@/_pages/ContactUs"
-import KeySolutionSection from "@/_pages/KeySolution"
-import MainBannerSection from "@/_pages/MainBanner"
-import OurProjects from "@/_pages/OurProjects"
-import OurServices from "@/_pages/OurServices"
 import {
 	getLogoOptions,
 	heroOptions,
@@ -15,6 +10,13 @@ import Header from "@/shared/common/Header"
 import getQueryClient from "@/utils/get-query-client"
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query"
 import { getLocale } from "next-intl/server"
+import dynamic from "next/dynamic"
+
+const MainBannerSection = dynamic(() => import("@/_pages/MainBanner"))
+const KeySolutionSection = dynamic(() => import("@/_pages/KeySolution"))
+const OurServices = dynamic(() => import("@/_pages/OurServices"))
+const OurProjects = dynamic(() => import("@/_pages/OurProjects"))
+const ContactUs = dynamic(() => import("@/_pages/ContactUs"))
 
 export default async function Home() {
 	const queryClient = getQueryClient()
