@@ -20,4 +20,4 @@ services:
 networks:
   strapi_cms:
     name: connex
-    driver: bridge
+    external: true
