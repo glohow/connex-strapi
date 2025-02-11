@@ -1,6 +1,7 @@
 services:
   next-app:
     container_name: connex-app
+    env_file: .env.production
     build:
       context: .
       dockerfile: Dockerfile.prod
