@@ -28,14 +28,7 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	// experimental: {
-	// 	swcPlugins: [
-	// 		[
-	// 			"@graphql-codegen/client-preset-swc-plugin",
-	// 			{ artifactDirectory: "./src/__generated__", gqlTagName: "gql" },
-	// 		],
-	// 	],
-	// },
+	output: 'standalone',
 }
 
 export default withNextIntl(nextConfig)
