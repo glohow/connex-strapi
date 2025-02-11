@@ -1,8 +1,5 @@
 import Image from "next/image"
-import React from "react"
 
-import fb_logo from "@/assets/images/fb-logo.png"
-import linkedin_logo from "@/assets/images/linkedin-logo.png"
 import footer_bg from "@/assets/images/footer-bg.png"
 
 const Footer = () => {

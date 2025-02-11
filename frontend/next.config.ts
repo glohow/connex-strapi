@@ -8,6 +8,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig: NextConfig = {
 	/* config options here */
 	basePath,
+	assetPrefix: basePath,
 	images: {
 		remotePatterns: [
 			{
