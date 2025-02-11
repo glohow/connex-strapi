@@ -10,10 +10,10 @@ export default (config: UserConfig) => {
           "/opt/app",
         ],
       },
-      hmr: {
-        host: "glohow-vn-web-dev.glohow.com",
-        port: 5173,
-      },
+      // hmr: {
+      //   host: "glohow-vn-web-dev.glohow.com",
+      //   port: 5173,
+      // },
     },
   });
 };
