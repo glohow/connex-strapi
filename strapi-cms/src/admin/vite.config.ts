@@ -10,11 +10,11 @@ export default (config: UserConfig) => {
           "/opt/app",
         ],
       },
-      hmr: {
-        protocol: "wss",
-        host: "glohow-vn-web-dev.glohow.com",
-        port: 5173,
-      },
+      // hmr: {
+      //   protocol: "wss",
+      //   host: "glohow-vn-web-dev.glohow.com",
+      //   port: 5173,
+      // },
     },
   });
 };
