@@ -16,9 +16,8 @@ const nextConfig: NextConfig = {
 				hostname: "img.daisyui.com",
 			},
 			{
-				protocol: 'http',
-				hostname: '127.0.0.1',
-				port: '1337'
+				protocol: 'https',
+				hostname: 'glohow-vn-web-dev.glohow.com',
 			}
 		],
 		localPatterns: [
