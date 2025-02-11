@@ -8,14 +8,6 @@ const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{
-				protocol: "https",
-				hostname: "placehold.co",
-			},
-			{
-				protocol: "https",
-				hostname: "img.daisyui.com",
-			},
-			{
 				protocol: 'https',
 				hostname: 'glohow-vn-web-dev.glohow.com',
 			}
@@ -27,7 +19,6 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	output: 'standalone',
 }
 
 export default withNextIntl(nextConfig)
