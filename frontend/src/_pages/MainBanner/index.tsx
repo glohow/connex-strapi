@@ -125,6 +125,7 @@ const MainBannerSection = () => {
 							fill
 							priority
 							draggable='false'
+							unoptimized
 							className='object-contain'
 						/>
 					)}

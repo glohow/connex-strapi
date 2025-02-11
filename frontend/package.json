@@ -4,7 +4,7 @@
   "private": true,
   "author": "Glohow JSC Web Dev",
   "scripts": {
-    "dev": "NODE_ENV=production next dev --turbopack",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "next-sitemap",
     "start": "next start",
