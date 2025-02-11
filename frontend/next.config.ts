@@ -8,17 +8,8 @@ const nextConfig: NextConfig = {
 	images: {
 		remotePatterns: [
 			{
-				protocol: "https",
-				hostname: "placehold.co",
-			},
-			{
-				protocol: "https",
-				hostname: "img.daisyui.com",
-			},
-			{
-				protocol: 'http',
-				hostname: '127.0.0.1',
-				port: '1337'
+				protocol: 'https',
+				hostname: 'glohow-vn-web-dev.glohow.com',
 			}
 		],
 		localPatterns: [
@@ -28,14 +19,6 @@ const nextConfig: NextConfig = {
 			},
 		],
 	},
-	// experimental: {
-	// 	swcPlugins: [
-	// 		[
-	// 			"@graphql-codegen/client-preset-swc-plugin",
-	// 			{ artifactDirectory: "./src/__generated__", gqlTagName: "gql" },
-	// 		],
-	// 	],
-	// },
 }
 
 export default withNextIntl(nextConfig)
