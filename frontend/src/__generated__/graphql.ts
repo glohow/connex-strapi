@@ -17,8 +17,6 @@ export type Scalars = {
   AboutBlocksDynamicZoneInput: { input: any; output: any; }
   /** A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. */
   DateTime: { input: any; output: any; }
-  /** A string used to identify an i18n locale */
-  I18NLocaleCode: { input: any; output: any; }
   /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
   JSON: { input: any; output: any; }
 };
@@ -352,7 +350,7 @@ export type FloatFilterInput = {
   startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = About | ComponentSharedCard | ComponentSharedHighlightCard | ComponentSharedMedia | ComponentSharedQuote | ComponentSharedRichText | ComponentSharedSeo | ComponentSharedServiceContent | ComponentSharedServiceGroup | ComponentSharedSlider | Contact | Global | Hero | I18NLocale | KeySolution | Project | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = About | ComponentSharedCard | ComponentSharedHighlightCard | ComponentSharedMedia | ComponentSharedQuote | ComponentSharedRichText | ComponentSharedSeo | ComponentSharedServiceContent | ComponentSharedServiceGroup | ComponentSharedSlider | Contact | Global | Hero | I18NLocale | KeySolution | PageLanguage | Project | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Service | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Global = {
   __typename?: 'Global';
@@ -360,9 +358,6 @@ export type Global = {
   defaultSeo?: Maybe<ComponentSharedSeo>;
   documentId: Scalars['ID']['output'];
   favicon?: Maybe<UploadFile>;
-  locale?: Maybe<Scalars['String']['output']>;
-  localizations: Array<Maybe<Global>>;
-  localizations_connection?: Maybe<GlobalRelationResponseCollection>;
   logo?: Maybe<UploadFile>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   siteDescription: Scalars['String']['output'];
@@ -379,20 +374,12 @@ export type GlobalInput = {
   siteName?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type GlobalRelationResponseCollection = {
-  __typename?: 'GlobalRelationResponseCollection';
-  nodes: Array<Global>;
-};
-
 export type Hero = {
   __typename?: 'Hero';
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   description: Scalars['String']['output'];
   documentId: Scalars['ID']['output'];
   heroImage: UploadFile;
-  locale?: Maybe<Scalars['String']['output']>;
-  localizations: Array<Maybe<Hero>>;
-  localizations_connection?: Maybe<HeroRelationResponseCollection>;
   logo: Array<Maybe<UploadFile>>;
   logo_connection: UploadFileRelationResponseCollection;
   ourNumber: Array<Maybe<ComponentSharedQuote>>;
@@ -429,11 +416,6 @@ export type HeroInput = {
   ourNumber?: InputMaybe<Array<InputMaybe<ComponentSharedQuoteInput>>>;
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type HeroRelationResponseCollection = {
-  __typename?: 'HeroRelationResponseCollection';
-  nodes: Array<Hero>;
 };
 
 export type I18NLocale = {
@@ -544,9 +526,6 @@ export type KeySolution = {
   body: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
-  locale?: Maybe<Scalars['String']['output']>;
-  localizations: Array<Maybe<KeySolution>>;
-  localizations_connection?: Maybe<KeySolutionRelationResponseCollection>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   solutionCard?: Maybe<Array<Maybe<ComponentSharedCard>>>;
   title: Scalars['String']['output'];
@@ -567,16 +546,12 @@ export type KeySolutionInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type KeySolutionRelationResponseCollection = {
-  __typename?: 'KeySolutionRelationResponseCollection';
-  nodes: Array<KeySolution>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createContact?: Maybe<Contact>;
+  createPageLanguage?: Maybe<PageLanguage>;
   createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
   /** Create a new role */
@@ -588,6 +563,7 @@ export type Mutation = {
   deleteGlobal?: Maybe<DeleteMutationResponse>;
   deleteHero?: Maybe<DeleteMutationResponse>;
   deleteKeySolution?: Maybe<DeleteMutationResponse>;
+  deletePageLanguage?: Maybe<DeleteMutationResponse>;
   deleteProject?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>;
   deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>;
@@ -611,6 +587,7 @@ export type Mutation = {
   updateGlobal?: Maybe<Global>;
   updateHero?: Maybe<Hero>;
   updateKeySolution?: Maybe<KeySolution>;
+  updatePageLanguage?: Maybe<PageLanguage>;
   updateProject?: Maybe<Project>;
   updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
@@ -632,6 +609,12 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateContactArgs = {
   data: ContactInput;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationCreatePageLanguageArgs = {
+  data: PageLanguageInput;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -663,23 +646,8 @@ export type MutationDeleteContactArgs = {
 };
 
 
-export type MutationDeleteGlobalArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeleteHeroArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeleteKeySolutionArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeleteProjectArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+export type MutationDeletePageLanguageArgs = {
+  documentId: Scalars['ID']['input'];
 };
 
 
@@ -690,11 +658,6 @@ export type MutationDeleteReviewWorkflowsWorkflowArgs = {
 
 export type MutationDeleteReviewWorkflowsWorkflowStageArgs = {
   documentId: Scalars['ID']['input'];
-};
-
-
-export type MutationDeleteServiceArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 
@@ -755,28 +718,31 @@ export type MutationUpdateContactArgs = {
 
 export type MutationUpdateGlobalArgs = {
   data: GlobalInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
 
 export type MutationUpdateHeroArgs = {
   data: HeroInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
 
 export type MutationUpdateKeySolutionArgs = {
   data: KeySolutionInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdatePageLanguageArgs = {
+  data: PageLanguageInput;
+  documentId: Scalars['ID']['input'];
   status?: InputMaybe<PublicationStatus>;
 };
 
 
 export type MutationUpdateProjectArgs = {
   data: ProjectInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -797,7 +763,6 @@ export type MutationUpdateReviewWorkflowsWorkflowStageArgs = {
 
 export type MutationUpdateServiceArgs = {
   data: ServiceInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -817,6 +782,40 @@ export type MutationUpdateUsersPermissionsRoleArgs = {
 export type MutationUpdateUsersPermissionsUserArgs = {
   data: UsersPermissionsUserInput;
   id: Scalars['ID']['input'];
+};
+
+export type PageLanguage = {
+  __typename?: 'PageLanguage';
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  documentId: Scalars['ID']['output'];
+  langCode: Scalars['String']['output'];
+  langContent: Scalars['JSON']['output'];
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PageLanguageEntityResponseCollection = {
+  __typename?: 'PageLanguageEntityResponseCollection';
+  nodes: Array<PageLanguage>;
+  pageInfo: Pagination;
+};
+
+export type PageLanguageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<PageLanguageFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  documentId?: InputMaybe<IdFilterInput>;
+  langCode?: InputMaybe<StringFilterInput>;
+  langContent?: InputMaybe<JsonFilterInput>;
+  not?: InputMaybe<PageLanguageFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<PageLanguageFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PageLanguageInput = {
+  langCode?: InputMaybe<Scalars['String']['input']>;
+  langContent?: InputMaybe<Scalars['JSON']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type Pagination = {
@@ -839,9 +838,6 @@ export type Project = {
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
   hightlightList: Array<Maybe<ComponentSharedHighlightCard>>;
-  locale?: Maybe<Scalars['String']['output']>;
-  localizations: Array<Maybe<Project>>;
-  localizations_connection?: Maybe<ProjectRelationResponseCollection>;
   projectCarousel: Array<Maybe<UploadFile>>;
   projectCarousel_connection: UploadFileRelationResponseCollection;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
@@ -877,11 +873,6 @@ export type ProjectInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type ProjectRelationResponseCollection = {
-  __typename?: 'ProjectRelationResponseCollection';
-  nodes: Array<Project>;
-};
-
 export enum PublicationStatus {
   Draft = 'DRAFT',
   Published = 'PUBLISHED'
@@ -900,6 +891,9 @@ export type Query = {
   i18NLocales_connection?: Maybe<I18NLocaleEntityResponseCollection>;
   keySolution?: Maybe<KeySolution>;
   me?: Maybe<UsersPermissionsMe>;
+  pageLanguage?: Maybe<PageLanguage>;
+  pageLanguages: Array<Maybe<PageLanguage>>;
+  pageLanguages_connection?: Maybe<PageLanguageEntityResponseCollection>;
   project?: Maybe<Project>;
   reviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   reviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
@@ -948,13 +942,11 @@ export type QueryContacts_ConnectionArgs = {
 
 
 export type QueryGlobalArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
 
 export type QueryHeroArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -982,13 +974,33 @@ export type QueryI18NLocales_ConnectionArgs = {
 
 
 export type QueryKeySolutionArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageLanguageArgs = {
+  documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageLanguagesArgs = {
+  filters?: InputMaybe<PageLanguageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryPageLanguages_ConnectionArgs = {
+  filters?: InputMaybe<PageLanguageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<PublicationStatus>;
 };
 
 
 export type QueryProjectArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -1038,7 +1050,6 @@ export type QueryReviewWorkflowsWorkflows_ConnectionArgs = {
 
 
 export type QueryServiceArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -1210,9 +1221,6 @@ export type Service = {
   body: Scalars['String']['output'];
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   documentId: Scalars['ID']['output'];
-  locale?: Maybe<Scalars['String']['output']>;
-  localizations: Array<Maybe<Service>>;
-  localizations_connection?: Maybe<ServiceRelationResponseCollection>;
   publishedAt?: Maybe<Scalars['DateTime']['output']>;
   services: Array<Maybe<ComponentSharedServiceGroup>>;
   title: Scalars['String']['output'];
@@ -1231,11 +1239,6 @@ export type ServiceInput = {
   publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   services?: InputMaybe<Array<InputMaybe<ComponentSharedServiceGroupInput>>>;
   title?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type ServiceRelationResponseCollection = {
-  __typename?: 'ServiceRelationResponseCollection';
-  nodes: Array<Service>;
 };
 
 export type StringFilterInput = {
@@ -1536,7 +1539,6 @@ export type UsersPermissionsUserRelationResponseCollection = {
 };
 
 export type GlobalQueryVariables = Exact<{
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 }>;
 
@@ -1549,23 +1551,20 @@ export type LogoQueryVariables = Exact<{ [key: string]: never; }>;
 export type LogoQuery = { __typename?: 'Query', global?: { __typename?: 'Global', logo?: { __typename?: 'UploadFile', createdAt?: any | null, documentId: string, name: string, url: string } | null } | null };
 
 export type HeroQueryVariables = Exact<{
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 }>;
 
 
-export type HeroQuery = { __typename?: 'Query', hero?: { __typename?: 'Hero', documentId: string, description: string, title: string, locale?: string | null, heroImage: { __typename?: 'UploadFile', url: string, documentId: string }, ourNumber: Array<{ __typename?: 'ComponentSharedQuote', body?: string | null, number: number, title?: string | null } | null>, logo: Array<{ __typename?: 'UploadFile', url: string, name: string, caption?: string | null } | null> } | null };
+export type HeroQuery = { __typename?: 'Query', hero?: { __typename?: 'Hero', documentId: string, description: string, title: string, heroImage: { __typename?: 'UploadFile', url: string, documentId: string }, ourNumber: Array<{ __typename?: 'ComponentSharedQuote', body?: string | null, number: number, title?: string | null } | null>, logo: Array<{ __typename?: 'UploadFile', url: string, name: string, caption?: string | null } | null> } | null };
 
 export type KeySolutionQueryVariables = Exact<{
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 }>;
 
 
-export type KeySolutionQuery = { __typename?: 'Query', keySolution?: { __typename?: 'KeySolution', documentId: string, createdAt?: any | null, locale?: string | null, solutionCard?: Array<{ __typename?: 'ComponentSharedCard', id: string, title: string, content: string, slug: string, image: { __typename?: 'UploadFile', url: string, documentId: string, name: string }, movingImage?: { __typename?: 'UploadFile', documentId: string, name: string, url: string } | null } | null> | null } | null };
+export type KeySolutionQuery = { __typename?: 'Query', keySolution?: { __typename?: 'KeySolution', documentId: string, createdAt?: any | null, solutionCard?: Array<{ __typename?: 'ComponentSharedCard', id: string, title: string, content: string, slug: string, image: { __typename?: 'UploadFile', url: string, documentId: string, name: string }, movingImage?: { __typename?: 'UploadFile', documentId: string, name: string, url: string } | null } | null> | null } | null };
 
 export type ServiceQueryVariables = Exact<{
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 }>;
 
@@ -1573,7 +1572,6 @@ export type ServiceQueryVariables = Exact<{
 export type ServiceQuery = { __typename?: 'Query', service?: { __typename?: 'Service', title: string, body: string, services: Array<{ __typename?: 'ComponentSharedServiceGroup', id: string, title: string, image: { __typename?: 'UploadFile', documentId: string, name: string, url: string }, serviceContent: Array<{ __typename?: 'ComponentSharedServiceContent', id: string, header: string, content: string } | null> } | null> } | null };
 
 export type ProjectQueryVariables = Exact<{
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
   pagination?: InputMaybe<PaginationArg>;
 }>;
@@ -1587,6 +1585,18 @@ export type CreateContactMutationVariables = Exact<{
 
 
 export type CreateContactMutation = { __typename?: 'Mutation', createContact?: { __typename?: 'Contact', company?: string | null, createdAt?: any | null, email: string, message?: string | null, name: string, service?: string | null, documentId: string } | null };
+
+export type PageLanguageQueryVariables = Exact<{
+  filters?: InputMaybe<PageLanguageFiltersInput>;
+}>;
+
+
+export type PageLanguageQuery = { __typename?: 'Query', pageLanguages: Array<{ __typename?: 'PageLanguage', documentId: string, langCode: string, langContent: any, createdAt?: any | null } | null> };
+
+export type I18NLocalesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type I18NLocalesQuery = { __typename?: 'Query', i18NLocales: Array<{ __typename?: 'I18NLocale', documentId: string, name?: string | null, code?: string | null } | null> };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -1604,8 +1614,8 @@ export class TypedDocumentString<TResult, TVariables>
 }
 
 export const GlobalDocument = new TypedDocumentString(`
-    query Global($locale: I18NLocaleCode, $status: PublicationStatus) {
-  global(locale: $locale, status: $status) {
+    query Global($status: PublicationStatus) {
+  global(status: $status) {
     defaultSeo {
       id
       metaTitle
@@ -1631,8 +1641,8 @@ export const LogoDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<LogoQuery, LogoQueryVariables>;
 export const HeroDocument = new TypedDocumentString(`
-    query Hero($locale: I18NLocaleCode, $status: PublicationStatus) {
-  hero(locale: $locale, status: $status) {
+    query Hero($status: PublicationStatus) {
+  hero(status: $status) {
     documentId
     description
     title
@@ -1645,7 +1655,6 @@ export const HeroDocument = new TypedDocumentString(`
       number
       title
     }
-    locale
     logo {
       url
       name
@@ -1655,11 +1664,10 @@ export const HeroDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<HeroQuery, HeroQueryVariables>;
 export const KeySolutionDocument = new TypedDocumentString(`
-    query KeySolution($locale: I18NLocaleCode, $status: PublicationStatus) {
-  keySolution(locale: $locale, status: $status) {
+    query KeySolution($status: PublicationStatus) {
+  keySolution(status: $status) {
     documentId
     createdAt
-    locale
     solutionCard {
       id
       title
@@ -1680,8 +1688,8 @@ export const KeySolutionDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<KeySolutionQuery, KeySolutionQueryVariables>;
 export const ServiceDocument = new TypedDocumentString(`
-    query Service($locale: I18NLocaleCode, $status: PublicationStatus) {
-  service(locale: $locale, status: $status) {
+    query Service($status: PublicationStatus) {
+  service(status: $status) {
     title
     body
     services {
@@ -1702,8 +1710,8 @@ export const ServiceDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<ServiceQuery, ServiceQueryVariables>;
 export const ProjectDocument = new TypedDocumentString(`
-    query Project($locale: I18NLocaleCode, $status: PublicationStatus, $pagination: PaginationArg) {
-  project(locale: $locale, status: $status) {
+    query Project($status: PublicationStatus, $pagination: PaginationArg) {
+  project(status: $status) {
     title
     projectCarousel(pagination: $pagination) {
       name
@@ -1736,3 +1744,22 @@ export const CreateContactDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<CreateContactMutation, CreateContactMutationVariables>;
+export const PageLanguageDocument = new TypedDocumentString(`
+    query PageLanguage($filters: PageLanguageFiltersInput) {
+  pageLanguages(filters: $filters) {
+    documentId
+    langCode
+    langContent
+    createdAt
+  }
+}
+    `) as unknown as TypedDocumentString<PageLanguageQuery, PageLanguageQueryVariables>;
+export const I18NLocalesDocument = new TypedDocumentString(`
+    query I18NLocales {
+  i18NLocales {
+    documentId
+    name
+    code
+  }
+}
+    `) as unknown as TypedDocumentString<I18NLocalesQuery, I18NLocalesQueryVariables>;

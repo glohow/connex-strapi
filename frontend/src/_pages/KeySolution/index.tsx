@@ -5,14 +5,14 @@ import { keySolutionOptions } from "@/queries"
 import { useGSAP } from "@gsap/react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import { gsap } from "gsap"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 
 gsap.registerPlugin(useGSAP)
 
 const KeySolutionSection = () => {
-	const locale = useLocale()
+	const t = useTranslations("KeyServices")
 	const { data, isFetching } = useSuspenseQuery({
-		...keySolutionOptions({ locale }),
+		...keySolutionOptions(),
 		select: (data) => {
 			return data.keySolution
 		},
@@ -25,13 +25,13 @@ const KeySolutionSection = () => {
 		>
 			<div className='text-black flex flex-col items-start gap-2 lg:items-center lg:gap-4'>
 				<div className='rounded-md bg-[#011C1C] px-2 py-1'>
-					<p className='text-secondary font-ibm text-sm font-semibold lg:text-base'>Key Services</p>
+					<p className='text-secondary font-ibm text-sm font-semibold lg:text-base'>{t('key')}</p>
 				</div>
 				<h2 className='text-2xl font-bold leading-[145%] md:text-5xl'>
-					Power Up Your Business with Key Solutions
+					{t('title')}
 				</h2>
 				<p className='text-black-secondary font-ibm text-lg leading-[150%] lg:text-xl'>
-					We provide the ultimate experience for both our Partners and Users
+					{t('sub_title')}
 				</p>
 			</div>
 			<div className='flex w-full max-w-[1440px] flex-wrap justify-center gap-4'>

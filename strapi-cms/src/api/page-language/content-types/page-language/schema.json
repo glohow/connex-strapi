@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "page_languages",
+  "info": {
+    "singularName": "page-language",
+    "pluralName": "page-languages",
+    "displayName": "Page Language"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "langCode": {
+      "type": "string",
+      "required": true
+    },
+    "langContent": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

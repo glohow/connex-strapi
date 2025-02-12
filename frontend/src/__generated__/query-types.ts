@@ -3,8 +3,8 @@ import { execute } from '../graphql/execute';
 
 
 export const GlobalDocument = `
-    query Global($locale: I18NLocaleCode, $status: PublicationStatus) {
-  global(locale: $locale, status: $status) {
+    query Global($status: PublicationStatus) {
+  global(status: $status) {
     defaultSeo {
       id
       metaTitle
@@ -60,8 +60,8 @@ export const useLogoQuery = <
     )};
 
 export const HeroDocument = `
-    query Hero($locale: I18NLocaleCode, $status: PublicationStatus) {
-  hero(locale: $locale, status: $status) {
+    query Hero($status: PublicationStatus) {
+  hero(status: $status) {
     documentId
     description
     title
@@ -74,7 +74,6 @@ export const HeroDocument = `
       number
       title
     }
-    locale
     logo {
       url
       name
@@ -99,11 +98,10 @@ export const useHeroQuery = <
     )};
 
 export const KeySolutionDocument = `
-    query KeySolution($locale: I18NLocaleCode, $status: PublicationStatus) {
-  keySolution(locale: $locale, status: $status) {
+    query KeySolution($status: PublicationStatus) {
+  keySolution(status: $status) {
     documentId
     createdAt
-    locale
     solutionCard {
       id
       title
@@ -139,8 +137,8 @@ export const useKeySolutionQuery = <
     )};
 
 export const ServiceDocument = `
-    query Service($locale: I18NLocaleCode, $status: PublicationStatus) {
-  service(locale: $locale, status: $status) {
+    query Service($status: PublicationStatus) {
+  service(status: $status) {
     title
     body
     services {
@@ -176,8 +174,8 @@ export const useServiceQuery = <
     )};
 
 export const ProjectDocument = `
-    query Project($locale: I18NLocaleCode, $status: PublicationStatus, $pagination: PaginationArg) {
-  project(locale: $locale, status: $status) {
+    query Project($status: PublicationStatus, $pagination: PaginationArg) {
+  project(status: $status) {
     title
     projectCarousel(pagination: $pagination) {
       name
@@ -234,5 +232,54 @@ export const useCreateContactMutation = <
     return useMutation<CreateContactMutation, TError, CreateContactMutationVariables, TContext>(
       ['CreateContact'],
       (variables?: CreateContactMutationVariables) => execute<CreateContactMutation, CreateContactMutationVariables>(CreateContactDocument, variables)(),
+      options
+    )};
+
+export const PageLanguageDocument = `
+    query PageLanguage($filters: PageLanguageFiltersInput) {
+  pageLanguages(filters: $filters) {
+    documentId
+    langCode
+    langContent
+    createdAt
+  }
+}
+    `;
+
+export const usePageLanguageQuery = <
+      TData = PageLanguageQuery,
+      TError = unknown
+    >(
+      variables?: PageLanguageQueryVariables,
+      options?: UseQueryOptions<PageLanguageQuery, TError, TData>
+    ) => {
+    
+    return useQuery<PageLanguageQuery, TError, TData>(
+      variables === undefined ? ['PageLanguage'] : ['PageLanguage', variables],
+      execute<PageLanguageQuery, PageLanguageQueryVariables>(PageLanguageDocument, variables),
+      options
+    )};
+
+export const I18NLocalesDocument = `
+    query I18NLocales {
+  i18NLocales {
+    documentId
+    name
+    code
+  }
+}
+    `;
+
+export const useI18NLocalesQuery = <
+      TData = I18NLocalesQuery,
+      TError = unknown
+    >(
+      variables?: I18NLocalesQueryVariables,
+      options?: UseQueryOptions<I18NLocalesQuery, TError, TData>
+    ) => {
+    
+    return useQuery<I18NLocalesQuery, TError, TData>(
+      variables === undefined ? ['I18NLocales'] : ['I18NLocales', variables],
+      execute<I18NLocalesQuery, I18NLocalesQueryVariables>(I18NLocalesDocument, variables),
       options
     )};

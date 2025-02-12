@@ -14,14 +14,14 @@ import { useWindowSize } from "@uidotdev/usehooks"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { useLocale } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 const OurProjects = () => {
-	const locale = useLocale()
+	const t = useTranslations("Projects")
 	const sectionRef = useRef<HTMLDivElement | null>(null)
 	const [currentHighlight, setCurrentHighlight] = useState<
 		ComponentSharedWithImage<ComponentSharedHighlightCard> | undefined | null
@@ -30,7 +30,7 @@ const OurProjects = () => {
 	const size = useWindowSize()
 
 	const { data, isFetching } = useSuspenseQuery({
-		...projectsOptions({ pagination: { limit: 50 }, locale }),
+		...projectsOptions({ pagination: { limit: 50 } }),
 		select: (data) => {
 			return data.project
 		},
@@ -114,9 +114,9 @@ const OurProjects = () => {
 			<div className='absolute inset-0 z-0 h-full w-full bg-[rgba(183,234,234,0.15)] bg-[linear-gradient(to_right,rgba(183,234,234,0.5)_1px,transparent_1px),linear-gradient(to_bottom,rgba(183,234,234,0.5)_1px,transparent_1px)] bg-[size:120px_85px]'></div>
 			<div className='z-10 flex flex-col items-start gap-4 lg:hidden'>
 				<div className='rounded-md bg-[#011C1C] px-2 py-1'>
-					<p className='text-secondary text-sm font-semibold'>Highlighted Project</p>
+					<p className='text-secondary text-sm font-semibold'>{t('key')}</p>
 				</div>
-				<h2 className='text-2xl font-bold leading-[145%]'>Project & Responsibilities</h2>
+				<h2 className='text-2xl font-bold leading-[145%]'>{t('title')}</h2>
 			</div>
 
 			<div className='projects z-10 grid w-full max-w-[1440px] grid-cols-1 items-center md:grid-cols-3'>
@@ -134,7 +134,7 @@ const OurProjects = () => {
 								</AspectRatio>
 							</CardHeader>
 							<CardContent className='pb-4 text-white'>
-								<h2 className='text-secondary card-title'>{currentHighlight.projectName}</h2>
+								<h2 className='text-secondary card-title'>{t(`${currentHighlight.projectName}`)}</h2>
 							</CardContent>
 							<CardFooter className='justify-between gap-2'>
 								<div className='flex gap-2'>
@@ -182,9 +182,9 @@ const OurProjects = () => {
 				<div className='relative col-span-2 ml-0 flex flex-col items-start justify-center gap-4 md:ml-[-60px]'>
 					<div className='hidden flex-col items-start gap-4 pl-24 lg:flex'>
 						<div className='rounded-md bg-[#011C1C] px-2 py-1'>
-							<p className='text-secondary font-semibold'>Highlighted Project</p>
+							<p className='text-secondary font-semibold'>{t('key')}</p>
 						</div>
-						<h2 className='text-5xl font-bold leading-[145%]'>Project & Responsibilities</h2>
+						<h2 className='text-5xl font-bold leading-[145%]'>{t('title')}</h2>
 					</div>
 
 					<div className='mt-[-32px] flex w-full flex-col gap-6 overflow-hidden rounded-2xl bg-[#50CDCC] pb-4 pt-14 md:mt-0 md:pt-4'>

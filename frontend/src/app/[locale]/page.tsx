@@ -20,14 +20,13 @@ const ContactUs = dynamic(() => import("@/_pages/ContactUs"))
 
 export default async function Home() {
 	const queryClient = getQueryClient()
-	const lang = await getLocale()
 
 	await Promise.allSettled([
 		await queryClient.prefetchQuery(getLogoOptions()),
-		await queryClient.prefetchQuery(heroOptions({ locale: lang })),
-		await queryClient.prefetchQuery(keySolutionOptions({ locale: lang })),
-		await queryClient.prefetchQuery(servicesOptions({ locale: lang })),
-		await queryClient.prefetchQuery(projectsOptions({ locale: lang })),
+		await queryClient.prefetchQuery(heroOptions()),
+		await queryClient.prefetchQuery(keySolutionOptions()),
+		await queryClient.prefetchQuery(servicesOptions()),
+		await queryClient.prefetchQuery(projectsOptions({pagination: {limit: 50}})),
 	])
 
 	return (

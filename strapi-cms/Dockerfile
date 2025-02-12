@@ -23,7 +23,6 @@ ENV PATH /opt/node_modules/.bin:$PATH
 # Grant full permissions to `node` user on `/opt/app`
 RUN chown -R node:node /opt/app && chmod -R 777 /opt/app
 
-
 # Switch to non-root user `node`
 USER node
 

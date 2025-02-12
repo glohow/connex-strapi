@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
 	return {
 		title: title,
 		description: des,
-		authors: [{ name: "Glohow JSC", url: "https://www.glohow.com/" }],
+		authors: [{ name: "Glohow JSC", url: "https://glohow.com/" }],
 		keywords: ["agency", "connex", "user"],
 		// Icons
 		icons: {

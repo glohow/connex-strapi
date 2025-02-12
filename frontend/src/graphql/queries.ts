@@ -1,8 +1,8 @@
 import { gql } from "@/__generated__"
 
 export const getGlobalSeo = gql(`
-  query Global($locale: I18NLocaleCode, $status: PublicationStatus) {
-    global(locale: $locale, status: $status) {
+  query Global($status: PublicationStatus) {
+    global(status: $status) {
       defaultSeo {
         id
         metaTitle
@@ -30,8 +30,8 @@ export const getGlobalLogo = gql(`
 `)
 
 export const getHero = gql(`
-	query Hero($locale: I18NLocaleCode, $status: PublicationStatus) {
-		hero(locale: $locale, status: $status) {
+	query Hero($status: PublicationStatus) {
+		hero(status: $status) {
       documentId
       description
       title
@@ -44,7 +44,6 @@ export const getHero = gql(`
         number
         title
       }
-      locale
       logo {
         url
         name
@@ -55,11 +54,10 @@ export const getHero = gql(`
 `)
 
 export const getKeySolutions = gql(`
-  query KeySolution($locale: I18NLocaleCode, $status: PublicationStatus) {
-    keySolution(locale: $locale, status: $status) {
+  query KeySolution($status: PublicationStatus) {
+    keySolution(status: $status) {
       documentId
       createdAt
-      locale
       solutionCard {
         id
         title
@@ -81,8 +79,8 @@ export const getKeySolutions = gql(`
 `)
 
 export const getServices = gql(`
-  query Service($locale: I18NLocaleCode, $status: PublicationStatus) {
-    service(locale: $locale, status: $status) {
+  query Service($status: PublicationStatus) {
+    service(status: $status) {
       title
       body
       services {
@@ -104,8 +102,8 @@ export const getServices = gql(`
 `)
 
 export const getProjects = gql(`
-  query Project($locale: I18NLocaleCode, $status: PublicationStatus, $pagination: PaginationArg) {
-    project(locale: $locale, status: $status) {
+  query Project($status: PublicationStatus, $pagination: PaginationArg) {
+    project(status: $status) {
       title
       projectCarousel(pagination: $pagination) {
         name
@@ -136,6 +134,27 @@ export const createContact = gql(`
       name
       service
       documentId
+    }
+  }
+`)
+
+export const getPageLanguage = gql(`
+  query PageLanguage($filters: PageLanguageFiltersInput) {
+    pageLanguages(filters: $filters) {
+      documentId
+      langCode
+      langContent
+      createdAt
+    }
+  }
+`)
+
+export const getI18nLocale = gql(`
+  query I18NLocales {
+    i18NLocales {
+      documentId
+      name
+      code
     }
   }
 `)

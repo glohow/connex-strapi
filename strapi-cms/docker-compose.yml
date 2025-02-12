@@ -4,7 +4,7 @@ services:
     container_name: strapi_cms
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     image: strapi_cms:latest
     restart: unless-stopped
     env_file: .env

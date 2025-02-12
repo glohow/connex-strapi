@@ -1,19 +1,22 @@
 import {
-	LogoDocument,
-	LogoQuery,
-	LogoQueryVariables,
 	HeroDocument,
 	HeroQuery,
 	HeroQueryVariables,
-	KeySolutionQueryVariables,
-	KeySolutionQuery,
+	I18NLocalesDocument,
+	I18NLocalesQuery,
+	I18NLocalesQueryVariables,
 	KeySolutionDocument,
-	ServiceQueryVariables,
-	ServiceQuery,
-	ServiceDocument,
-	ProjectQueryVariables,
-	ProjectQuery,
+	KeySolutionQuery,
+	KeySolutionQueryVariables,
+	LogoDocument,
+	LogoQuery,
+	LogoQueryVariables,
 	ProjectDocument,
+	ProjectQuery,
+	ProjectQueryVariables,
+	ServiceDocument,
+	ServiceQuery,
+	ServiceQueryVariables,
 } from "@/__generated__/graphql"
 import { execute } from "@/graphql/execute"
 import { queryOptions } from "@tanstack/react-query"
@@ -68,5 +71,12 @@ export const projectsOptions = (variables?: ProjectQueryVariables) => {
 	return queryOptions({
 		queryKey: variables === undefined ? ["Project"] : ["Project", variables],
 		queryFn: execute<ProjectQuery, ProjectQueryVariables>(ProjectDocument, variables),
+	})
+}
+
+export const i18nOptions = (variables?: I18NLocalesQueryVariables) => {
+	return queryOptions({
+		queryKey: variables === undefined ? ["I18n"] : ["I18n", variables],
+		queryFn: execute<I18NLocalesQuery, I18NLocalesQueryVariables>(I18NLocalesDocument, variables),
 	})
 }

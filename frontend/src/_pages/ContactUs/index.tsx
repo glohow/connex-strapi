@@ -31,6 +31,7 @@ import { execute } from "@/graphql/execute"
 import { cn } from "@/lib/utils"
 import { services } from "@/types/constants"
 import { useMutation } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
 
 const contactSchema = z.object({
 	name: z.string({ message: "Name is required" }).trim(),
@@ -47,6 +48,8 @@ const ContactUs = () => {
 	const logoRef = useRef<HTMLImageElement | null>(null)
 	const size = useWindowSize()
 	const [isSubmitContact, setIsSubmitContact] = useState<boolean>(false)
+	const t = useTranslations("ContactUs")
+	const g = useTranslations("Global")
 
 	const form = useForm<z.infer<typeof contactSchema>>({
 		defaultValues: {
@@ -150,10 +153,10 @@ const ContactUs = () => {
 			<div className='flex w-full max-w-[1440px] flex-col items-center gap-6 md:gap-12'>
 				<div className='z-10 flex flex-col items-center gap-4'>
 					<div className='rounded-md bg-[#011C1C] px-2 py-1'>
-						<p className='text-secondary text-sm font-semibold md:text-xl'>Connect with us</p>
+						<p className='text-secondary text-sm font-semibold md:text-xl'>{t('key')}</p>
 					</div>
 					<h2 className='text-center text-2xl font-bold leading-[145%] md:text-5xl'>
-						Fill the form and we’ll get back to you
+						{t('title')} 
 					</h2>
 				</div>
 
@@ -174,10 +177,9 @@ const ContactUs = () => {
 							Your browser does not support the video tag.
 						</video>
 
-						<h3 className='prose prose-xl font-semibold text-base-100 md:prose-2xl'>Thank you</h3>
+						<h3 className='prose prose-xl font-semibold text-base-100 md:prose-2xl'>{t('thank.heading')}</h3>
 						<p className='prose prose-lg text-center text-base-100 md:prose-xl'>
-							Thank you for reaching out! We’ve received your contact details and will get back to
-							you as soon as possible.
+							{t('thank.content')}
 						</p>
 					</div>
 				)}
@@ -194,7 +196,7 @@ const ContactUs = () => {
 											type='text'
 											name={field.name}
 											value={field.state.value}
-											placeholder='Name'
+											placeholder={t('form.name')}
 											className='input w-full placeholder:text-[#A4A4A4]'
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
@@ -214,7 +216,7 @@ const ContactUs = () => {
 											type='text'
 											name={field.name}
 											value={field.state.value}
-											placeholder='Company'
+											placeholder={t('form.company')}
 											className='input w-full placeholder:text-[#A4A4A4]'
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
@@ -236,7 +238,7 @@ const ContactUs = () => {
 											type='email'
 											name={field.name}
 											value={field.state.value}
-											placeholder='Email'
+											placeholder={t('form.email')}
 											className='input w-full placeholder:text-[#A4A4A4]'
 											onBlur={field.handleBlur}
 											onChange={(e) => field.handleChange(e.target.value)}
@@ -259,7 +261,7 @@ const ContactUs = () => {
 										>
 											<SelectTrigger className='w-full placeholder:text-[#A4A4A4]'>
 												<SelectValue
-													placeholder={<span className='text-[#A4A4A4]'>Services</span>}
+													placeholder={<span className='text-[#A4A4A4]'>{t('form.service')}</span>}
 												/>
 											</SelectTrigger>
 											<SelectContent
@@ -292,7 +294,7 @@ const ContactUs = () => {
 										rows={5}
 										name={field.name}
 										value={field.state.value}
-										placeholder='Leave us a message...'
+										placeholder={t('form.message')}
 										className='textarea w-full placeholder:text-[#A4A4A4]'
 										onBlur={field.handleBlur}
 										onChange={(e) => field.handleChange(e.target.value)}
@@ -309,7 +311,7 @@ const ContactUs = () => {
 							className='btn btn-primary min-h-[66px] w-full'
 							type='submit'
 						>
-							<p className='text-base font-semibold text-white md:text-lg'>Submit</p>
+							<p className='text-base font-semibold text-white md:text-lg'>{g('btn.submit')}</p>
 						</button>
 					</div>
 				</form>

@@ -1,6 +1,7 @@
 import { ComponentSharedCard } from "@/__generated__/graphql"
 import { cn } from "@/lib/utils"
 import { CMS_URL } from "@/types/constants"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import React, { useEffect, useState } from "react"
 
@@ -24,6 +25,7 @@ type SolutionCardProps = {
 }
 
 const SolutionCard = ({ item }: SolutionCardProps) => {
+	const t = useTranslations("KeyServices")
 	const [image, setImage] = useState<string>("")
 
 	const colorMapping = (slug: string) => {
@@ -87,8 +89,8 @@ const SolutionCard = ({ item }: SolutionCardProps) => {
 					/>
 				</div>
 			)}
-			<p className='prose-xl font-semibold'>{item.title}</p>
-			<p className='text-black-tertiary prose-base leading-6'>{item.content}</p>
+			<p className='prose-xl font-semibold'>{t(`${item.slug}.title`)}</p>
+			<p className='text-black-tertiary prose-base leading-6'>{t(`${item.slug}.content`)}</p>
 		</div>
 	)
 }

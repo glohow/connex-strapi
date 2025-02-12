@@ -8,17 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { getLogoOptions } from "@/queries"
+import { getLogoOptions, i18nOptions } from "@/queries"
 import { CMS_URL, HEADER_HEIGHT } from "@/types/constants"
+import { useGSAP } from "@gsap/react"
 import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { Globe, Menu } from "lucide-react"
-import { useLocale } from "next-intl"
-import Image from "next/image"
 import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
-import { useRef } from "react"
 import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin"
+import { Globe, Menu } from "lucide-react"
+import { useLocale, useTranslations } from "next-intl"
+import Image from "next/image"
+import { useRef } from "react"
 
 gsap.registerPlugin(ScrollToPlugin)
 
@@ -32,6 +32,15 @@ const Header = () => {
 		},
 	})
 
+	const { data: i18n, isFetching: isFetchingI18n } = useSuspenseQuery({
+		...i18nOptions(),
+		select: (data) => {
+			return data.i18NLocales
+		},
+	})
+
+	const t = useTranslations("Global")
+
 	const { contextSafe } = useGSAP({ scope: menuRef })
 
 	const onScrollTo = contextSafe((idString: string) => {
@@ -40,7 +49,7 @@ const Header = () => {
 
 	return (
 		<div
-			className={cn("navbar z-50 justify-center px-4 lg:px-16 bg-base-100 border-b")}
+			className={cn("navbar z-50 justify-center border-b bg-base-100 px-4 lg:px-16")}
 			style={{
 				height: HEADER_HEIGHT,
 			}}
@@ -73,7 +82,7 @@ const Header = () => {
 								className='btn btn-ghost'
 								onClick={() => onScrollTo("#our_services")}
 							>
-								Services
+								{t("nav.service")}
 							</a>
 						</li>
 						<li>
@@ -81,7 +90,7 @@ const Header = () => {
 								className='btn btn-ghost'
 								onClick={() => onScrollTo("#our_projects")}
 							>
-								Projects
+								{t("nav.project")}
 							</a>
 						</li>
 						<li>
@@ -90,25 +99,28 @@ const Header = () => {
 									{locale === "en" ? "English" : "Korean"}
 								</summary>
 								<ul className='min-w-32 border bg-base-100'>
-									<li className='m-0 ps-0'>
-										<Link
-											href={"/"}
-											locale='en'
-											className={cn("flex justify-center", locale === "en" && "text-secondary")}
-										>
-											English
-										</Link>
-									</li>
-									<div className='divider m-0 p-0'></div>
-									<li className='m-0 ps-0'>
-										<Link
-											href={"/"}
-											locale='ko'
-											className={cn("flex justify-center", locale === "ko" && "text-secondary")}
-										>
-											Korean
-										</Link>
-									</li>
+									{!isFetchingI18n &&
+										i18n &&
+										i18n.map((i, index) => (
+											<>
+												<li
+													className='m-0 ps-0'
+													key={index}
+												>
+													<Link
+														href={"/"}
+														locale={i?.code || undefined}
+														className={cn(
+															"flex justify-center",
+															locale === i?.code && "text-secondary",
+														)}
+													>
+														{i?.name?.split("(")[0]}
+													</Link>
+												</li>
+												{index !== i18n.length - 1 && <div className='divider m-0 p-0'></div>}
+											</>
+										))}
 								</ul>
 							</details>
 						</li>
@@ -117,7 +129,7 @@ const Header = () => {
 								className='btn btn-primary px-4 py-2 font-semibold text-base-100'
 								onClick={() => onScrollTo("#contact_us")}
 							>
-								Contact us
+								{t("nav.contact")}
 							</button>
 						</li>
 					</ul>
@@ -133,25 +145,25 @@ const Header = () => {
 							sideOffset={16}
 							className='[&>*]:font-ibm [&>*]:font-normal'
 						>
-							<DropdownMenuItem className='px-1 py-2 text-center'>
-								<Link
-									href={"/"}
-									locale='en'
-									className={cn("flex justify-center", locale === "en" && "text-secondary")}
-								>
-									English
-								</Link>
-							</DropdownMenuItem>
-							<DropdownMenuSeparator />
-							<DropdownMenuItem className='px-1 py-2 text-center'>
-								<Link
-									href={"/"}
-									locale='ko'
-									className={cn("flex justify-center", locale === "ko" && "text-secondary")}
-								>
-									Korean
-								</Link>
-							</DropdownMenuItem>
+							{!isFetchingI18n &&
+								i18n &&
+								i18n.map((i, index) => (
+									<>
+										<DropdownMenuItem className='px-1 py-2 text-center'>
+											<Link
+												href={"/"}
+												locale={i?.code || undefined}
+												className={cn(
+													"flex justify-center",
+													locale === i?.code && "text-secondary",
+												)}
+											>
+												{i?.name?.split("(")[0]}
+											</Link>
+										</DropdownMenuItem>
+										{index !== i18n.length - 1 && <DropdownMenuSeparator />}
+									</>
+								))}
 						</DropdownMenuContent>
 					</DropdownMenu>
 
@@ -169,21 +181,21 @@ const Header = () => {
 								className='px-2 py-4'
 								onClick={() => onScrollTo("#our_services")}
 							>
-								Services
+								{t("nav.service")}
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
 								className='px-2 py-4'
 								onClick={() => onScrollTo("#our_projects")}
 							>
-								Projects
+								{t("nav.project")}
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
 								className='px-2 py-4'
 								onClick={() => onScrollTo("#contact_us")}
 							>
-								Contact us
+								{t("nav.contact")}
 							</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>

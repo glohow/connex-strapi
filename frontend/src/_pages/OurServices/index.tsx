@@ -3,13 +3,12 @@
 import CollapseWithImage from "@/components/CollapseIWImage"
 import { servicesOptions } from "@/queries"
 import { useSuspenseQuery } from "@tanstack/react-query"
-import { useLocale } from "next-intl"
-import React from "react"
+import { useTranslations } from "next-intl"
 
 const OurServices = () => {
-	const locale = useLocale()
+	const t = useTranslations("OurServices")
 	const { data, isFetching } = useSuspenseQuery({
-		...servicesOptions({ locale }),
+		...servicesOptions(),
 		select: (data) => {
 			return data.service
 		},
@@ -23,14 +22,14 @@ const OurServices = () => {
 			<div className='flex max-w-6xl flex-col items-center gap-5 text-start lg:text-center'>
 				{!isFetching && data && (
 					<>
-						<h2 className='text-2xl font-semibold leading-[145%] lg:text-5xl'>{data.title}</h2>
+						<h2 className='text-2xl font-semibold leading-[145%] lg:text-5xl'>{t('title')}</h2>
 						<p className='text-black-secondary font-ibm text-lg leading-[150%] lg:text-2xl'>
-							{data.body}
+							{t('sub_title')}
 						</p>
 					</>
 				)}
 			</div>
-			<div className='flex flex-col gap-12 lg:gap-[128px] w-full max-w-[1440px]'>
+			<div className='flex w-full max-w-[1440px] flex-col gap-12 lg:gap-[128px]'>
 				{!isFetching &&
 					data &&
 					data.services.map((service, index) => (

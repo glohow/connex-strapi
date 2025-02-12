@@ -7,23 +7,20 @@ import { CMS_URL } from "@/types/constants"
 import { useGSAP } from "@gsap/react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import gsap from "gsap"
-import DOMPurify from "isomorphic-dompurify"
-import { useLocale } from "next-intl"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 
 const MainBannerSection = () => {
-	const locale = useLocale()
+	const t = useTranslations("MainBanner")
 
 	const sectionRef = useRef<HTMLDivElement | null>(null)
 	const { data, isFetching } = useSuspenseQuery({
-		...heroOptions({ locale }),
+		...heroOptions(),
 		select: (data) => {
 			return data.hero
 		},
 	})
-
-	const [htmlContent, setHtmlContent] = useState<string>("")
 
 	const { contextSafe } = useGSAP(
 		() => {
@@ -76,12 +73,6 @@ const MainBannerSection = () => {
 		gsap.to(window, { duration, scrollTo: idString })
 	})
 
-	useEffect(() => {
-		if (!isFetching && data) {
-			setHtmlContent(data.description)
-		}
-	}, [data, isFetching])
-
 	return (
 		<section
 			ref={sectionRef}
@@ -94,12 +85,9 @@ const MainBannerSection = () => {
 				{!isFetching && data && (
 					<div className='left-content flex flex-col items-start justify-center gap-4 md:gap-8'>
 						<h1 className='text-black text-2xl font-bold leading-[145%] lg:text-5xl'>
-							{data.title}
+							{t("title")}
 						</h1>
-						<p
-							className='text-black-secondary font-ibm text-lg lg:text-xl'
-							dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlContent) }}
-						></p>
+						<p className='text-black-secondary font-ibm text-lg lg:text-xl'>{t("description")}</p>
 						<div className='flex w-full justify-center gap-4 md:justify-start'>
 							<button
 								className='text-accent btn btn-secondary h-10 min-h-0 flex-1 px-4 py-2 md:flex-none'
@@ -148,7 +136,7 @@ const MainBannerSection = () => {
 			<div className='relative flex min-h-[290px] w-full flex-col items-center gap-12 border border-x-0 border-y-[#72D7D6] pt-12'>
 				<div className='absolute inset-0 h-full w-full bg-[rgba(8,185,184,0.04)] bg-[radial-gradient(#95E1E0_2px,transparent_2px)] opacity-[0.6] [background-size:32px_32px]'></div>
 				<p className='z-10 text-center text-2xl font-semibold lg:text-5xl'>
-					Our number speak for themselves
+					{t("our_number.title")}
 				</p>
 				{!isFetching && data && data.ourNumber && (
 					<div className='z-10 flex w-full flex-col items-center justify-center gap-4 border-t border-t-[#72D7D6] lg:flex-row'>
@@ -164,7 +152,9 @@ const MainBannerSection = () => {
 									key={index}
 								>
 									<p className='number-text text-accent prose text-6xl font-semibold leading-[150%] lg:text-7xl'>{`${info?.number}${info?.body ?? ""}`}</p>
-									<p className='number-content text-lg lg:text-xl'>{info?.title}</p>
+									<p className='number-content text-lg lg:text-xl'>
+										{t(`our_number.${info?.title?.toLowerCase()}`)}
+									</p>
 								</div>
 							)
 						})}

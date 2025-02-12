@@ -2,7 +2,7 @@ import { ComponentSharedServiceGroup } from "@/__generated__/graphql"
 import { cn } from "@/lib/utils"
 import { ComponentSharedWithImage } from "@/types"
 import { CMS_URL } from "@/types/constants"
-import DOMPurify from "isomorphic-dompurify"
+import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
 
@@ -15,12 +15,7 @@ const CollapseWithImage = ({
 	item: { title, serviceContent, image },
 	direction = "left",
 }: CollapseWithImageProps) => {
-	// const [currentIndex, setCurrentIndex] = useState<number>(-1)
-
-	// const handleOnChange = (index: number) => {
-	// 	setCurrentIndex(index === currentIndex ? -1 : index)
-	// }
-
+	const t = useTranslations("OurServices")
 	return (
 		<div
 			className={cn(
@@ -42,45 +37,25 @@ const CollapseWithImage = ({
 
 			<div className='flex w-full flex-col gap-4 font-ibm lg:gap-8'>
 				<p className='text-black hidden text-2xl font-semibold leading-[150%] lg:block'>{title}</p>
-				{/* {serviceContent.map((item, index) => (
-					<div
-						className='collapse collapse-plus cursor-pointer rounded-2xl border border-[#CACACA]'
-						key={index}
-					>
-						<input
-							type='radio'
-							name={`service-${itemIndex}-accordion-${index}`}
-							checked={currentIndex === index}
-							className='cursor-pointer'
-							onChange={() => handleOnChange(index)}
-							onClick={() =>
-								currentIndex === index ? setCurrentIndex(-1) : setCurrentIndex(index)
-							}
-						/>
-						<div className='text-black collapse-title text-lg lg:text-xl'>{item?.header}</div>
-						<div
-							className='text-black collapse-content [&>li]:leading-[150%] [&>ul]:list-disc [&>ul]:px-4'
-							dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.content ?? "") }}
-						/>
-					</div>
-				))} */}
 				<Accordion
 					type='single'
 					collapsible
 					className='flex w-full flex-col gap-4 font-ibm lg:gap-8'
 				>
-					{serviceContent.map((item, index) => (
+					{serviceContent.map((_, index) => (
 						<AccordionItem
 							value={`item-${index}`}
 							key={index}
 						>
 							<AccordionTrigger className='text-black text-start text-lg lg:text-xl'>
-								{item?.header}
+								{t(`${title.replace(/ /g, "")}.${index + 1}.header`)}
 							</AccordionTrigger>
 							<AccordionContent className='text-black'>
 								<div
 									className='relative [&>li]:leading-[150%] [&>ul]:list-disc [&>ul]:px-5'
-									dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.content ?? "") }}
+									dangerouslySetInnerHTML={{
+										__html: t.raw(`${title.replace(/ /g, "")}.${index + 1}.content`),
+									}}
 								/>
 							</AccordionContent>
 						</AccordionItem>
