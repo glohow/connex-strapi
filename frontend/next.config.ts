@@ -1,15 +1,10 @@
 import type { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
 
-const isProd = process.env.NEXT_PUBLIC_NODE_ENV === "production"
-const basePath = isProd ? process.env.NEXT_PUBLIC_BASE_PATH : ""
-
 const withNextIntl = createNextIntlPlugin()
 
 const nextConfig: NextConfig = {
 	/* config options here */
-	basePath,
-	assetPrefix: isProd ? process.env.NEXT_PUBLIC_SITE_URL : "",
 	images: {
 		remotePatterns: [
 			{
