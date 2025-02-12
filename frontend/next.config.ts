@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
 		remotePatterns: [
 			{
 				protocol: "https",
-				hostname: "connex.glohow.com",
+				hostname: "cms.connex.glohow.com",
 			},
 		],
 		localPatterns: [
