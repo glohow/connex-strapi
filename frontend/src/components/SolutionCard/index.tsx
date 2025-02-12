@@ -36,7 +36,7 @@ const SolutionCard = ({ item }: SolutionCardProps) => {
 				return "text-[#FCCC59] bg-[#6D500A]"
 			case "QA":
 				return "text-[#F7A080] bg-[#69270F]"
-			case "LC":
+			case "L10N":
 				return "text-[#06D597] bg-[#023F2C]"
 			default:
 				return "text-[#72D7D6] bg-[#023636]"
