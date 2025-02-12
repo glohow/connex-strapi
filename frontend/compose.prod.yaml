@@ -6,8 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile.prod
       args:
-        NEXT_PUBLIC_CMS_URL: https://glohow-vn-web-dev.glohow.com
-        NEXT_PUBLIC_SITE_URL: https://glohow-vn-web-dev.glohow.com/connex
+        NEXT_PUBLIC_CMS_URL: https://cms.connex.glohow.com
+        NEXT_PUBLIC_SITE_URL: https://connex.glohow.com
     restart: always
     ports:
       - 3000:3000
