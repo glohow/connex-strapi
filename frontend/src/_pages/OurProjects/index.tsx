@@ -184,7 +184,7 @@ const OurProjects = () => {
 						<div className='rounded-md bg-[#011C1C] px-2 py-1'>
 							<p className='text-secondary font-semibold'>{t("key")}</p>
 						</div>
-						<h2 className='text-5xl font-bold leading-[145%]'>{t("title")}</h2>
+						<h2 className='text-5xl font-bold leading-[145%]'>{!isFetching && data && data.title}</h2>
 					</div>
 
 					<div className='mt-[-32px] flex w-full flex-col gap-6 overflow-hidden rounded-2xl bg-[#50CDCC] pb-4 pt-14 md:mt-0 md:pt-4'>
