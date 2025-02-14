@@ -10,10 +10,18 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "title": {
-      "pluginOptions": {},
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "type": "string",
       "required": true
     },
@@ -24,13 +32,21 @@
       "allowedTypes": [
         "images"
       ],
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "hightlightList": {
       "displayName": "Highlight Card",
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {},
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "shared.highlight-card",
       "required": true
     }

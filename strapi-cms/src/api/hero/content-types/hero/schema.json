@@ -10,10 +10,18 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "title": {
-      "pluginOptions": {},
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "type": "string",
       "required": true
     },
@@ -25,7 +33,11 @@
         "images",
         "videos"
       ],
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "logo": {
       "type": "media",
@@ -35,7 +47,11 @@
         "images",
         "videos"
       ],
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "description": {
       "pluginOptions": {},
@@ -49,7 +65,11 @@
     "ourNumber": {
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {},
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
       "component": "shared.quote",
       "required": true
     }

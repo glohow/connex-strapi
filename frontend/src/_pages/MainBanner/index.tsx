@@ -7,16 +7,20 @@ import { CMS_URL } from "@/types/constants"
 import { useGSAP } from "@gsap/react"
 import { useSuspenseQuery } from "@tanstack/react-query"
 import gsap from "gsap"
-import { useTranslations } from "next-intl"
+import DOMPurify from "isomorphic-dompurify"
+import { useLocale, useTranslations } from "next-intl"
 import Image from "next/image"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const MainBannerSection = () => {
 	const t = useTranslations("MainBanner")
+	const g = useTranslations("Global")
 
 	const sectionRef = useRef<HTMLDivElement | null>(null)
+	const [htmlContent, setHtmlContent] = useState<string>("")
+
 	const { data, isFetching } = useSuspenseQuery({
-		...heroOptions(),
+		...heroOptions({ locale: useLocale() }),
 		select: (data) => {
 			return data.hero
 		},
@@ -73,6 +77,12 @@ const MainBannerSection = () => {
 		gsap.to(window, { duration, scrollTo: idString })
 	})
 
+	useEffect(() => {
+		if (!isFetching && data) {
+			setHtmlContent(data.description)
+		}
+	}, [data, isFetching])
+
 	return (
 		<section
 			ref={sectionRef}
@@ -85,21 +95,24 @@ const MainBannerSection = () => {
 				{!isFetching && data && (
 					<div className='left-content flex flex-col items-start justify-center gap-4 md:gap-8'>
 						<h1 className='text-black text-2xl font-bold leading-[145%] lg:text-5xl'>
-							{t("title")}
+							{data.title}
 						</h1>
-						<p className='text-black-secondary font-ibm text-lg lg:text-xl'>{t("description")}</p>
+						<p
+							className='text-black-secondary font-ibm text-lg lg:text-xl'
+							dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(htmlContent) }}
+						></p>
 						<div className='flex w-full justify-center gap-4 md:justify-start'>
 							<button
 								className='text-accent btn btn-secondary h-10 min-h-0 flex-1 px-4 py-2 md:flex-none'
 								onClick={() => onScrollTo("#our_services", 2)}
 							>
-								Our service
+								{g("btn.our_service")}
 							</button>
 							<button
 								className='btn btn-primary h-10 min-h-0 flex-1 px-4 py-2 text-base-100 md:flex-none'
 								onClick={() => onScrollTo("#contact_us", 1)}
 							>
-								Contact us
+								{g("nav.contact")}
 							</button>
 						</div>
 					</div>
@@ -153,7 +166,7 @@ const MainBannerSection = () => {
 								>
 									<p className='number-text text-accent prose text-6xl font-semibold leading-[150%] lg:text-7xl'>{`${info?.number}${info?.body ?? ""}`}</p>
 									<p className='number-content text-lg lg:text-xl'>
-										{t(`our_number.${info?.title?.toLowerCase()}`)}
+										{info?.title}
 									</p>
 								</div>
 							)

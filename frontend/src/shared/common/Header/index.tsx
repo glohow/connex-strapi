@@ -18,7 +18,7 @@ import { ScrollToPlugin } from "gsap/dist/ScrollToPlugin"
 import { Globe, Menu } from "lucide-react"
 import { useLocale, useTranslations } from "next-intl"
 import Image from "next/image"
-import { useRef } from "react"
+import { Fragment, useRef } from "react"
 
 gsap.registerPlugin(ScrollToPlugin)
 
@@ -96,17 +96,14 @@ const Header = () => {
 						<li>
 							<details>
 								<summary className='font-semibold'>
-									{locale === "en" ? "English" : "Korean"}
+									{i18n && i18n.find((i) => i?.code === locale)?.name?.split("(")[0]}
 								</summary>
 								<ul className='min-w-32 border bg-base-100'>
 									{!isFetchingI18n &&
 										i18n &&
 										i18n.map((i, index) => (
-											<>
-												<li
-													className='m-0 ps-0'
-													key={index}
-												>
+											<Fragment key={index}>
+												<li className='m-0 ps-0'>
 													<Link
 														href={"/"}
 														locale={i?.code || undefined}
@@ -119,7 +116,7 @@ const Header = () => {
 													</Link>
 												</li>
 												{index !== i18n.length - 1 && <div className='divider m-0 p-0'></div>}
-											</>
+											</Fragment>
 										))}
 								</ul>
 							</details>
@@ -148,7 +145,7 @@ const Header = () => {
 							{!isFetchingI18n &&
 								i18n &&
 								i18n.map((i, index) => (
-									<>
+									<Fragment key={index}>
 										<DropdownMenuItem className='px-1 py-2 text-center'>
 											<Link
 												href={"/"}
@@ -162,7 +159,7 @@ const Header = () => {
 											</Link>
 										</DropdownMenuItem>
 										{index !== i18n.length - 1 && <DropdownMenuSeparator />}
-									</>
+									</Fragment>
 								))}
 						</DropdownMenuContent>
 					</DropdownMenu>

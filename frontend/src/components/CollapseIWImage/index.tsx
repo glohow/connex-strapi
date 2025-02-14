@@ -2,6 +2,7 @@ import { ComponentSharedServiceGroup } from "@/__generated__/graphql"
 import { cn } from "@/lib/utils"
 import { ComponentSharedWithImage } from "@/types"
 import { CMS_URL } from "@/types/constants"
+import DOMPurify from "isomorphic-dompurify"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion"
@@ -15,7 +16,6 @@ const CollapseWithImage = ({
 	item: { title, serviceContent, image },
 	direction = "left",
 }: CollapseWithImageProps) => {
-	const t = useTranslations("OurServices")
 	return (
 		<div
 			className={cn(
@@ -42,20 +42,18 @@ const CollapseWithImage = ({
 					collapsible
 					className='flex w-full flex-col gap-4 font-ibm lg:gap-8'
 				>
-					{serviceContent.map((_, index) => (
+					{serviceContent.map((item, index) => (
 						<AccordionItem
 							value={`item-${index}`}
 							key={index}
 						>
 							<AccordionTrigger className='text-black text-start text-lg lg:text-xl'>
-								{t(`${title.replace(/ /g, "")}.${index + 1}.header`)}
+								{item?.header}
 							</AccordionTrigger>
 							<AccordionContent className='text-black'>
 								<div
 									className='relative [&>li]:leading-[150%] [&>ul]:list-disc [&>ul]:px-5'
-									dangerouslySetInnerHTML={{
-										__html: t.raw(`${title.replace(/ /g, "")}.${index + 1}.content`),
-									}}
+									dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item?.content ?? "") }}
 								/>
 							</AccordionContent>
 						</AccordionItem>

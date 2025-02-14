@@ -12,7 +12,7 @@ gsap.registerPlugin(useGSAP)
 const KeySolutionSection = () => {
 	const t = useTranslations("KeyServices")
 	const { data, isFetching } = useSuspenseQuery({
-		...keySolutionOptions(),
+		...keySolutionOptions({ locale: useLocale() }),
 		select: (data) => {
 			return data.keySolution
 		},
@@ -25,14 +25,16 @@ const KeySolutionSection = () => {
 		>
 			<div className='text-black flex flex-col items-start gap-2 lg:items-center lg:gap-4'>
 				<div className='rounded-md bg-[#011C1C] px-2 py-1'>
-					<p className='text-secondary font-ibm text-sm font-semibold lg:text-base'>{t('key')}</p>
+					<p className='text-secondary font-ibm text-sm font-semibold lg:text-base'>{t("key")}</p>
 				</div>
-				<h2 className='text-2xl font-bold leading-[145%] md:text-5xl'>
-					{t('title')}
-				</h2>
-				<p className='text-black-secondary font-ibm text-lg leading-[150%] lg:text-xl'>
-					{t('sub_title')}
-				</p>
+				{!isFetching && data && (
+					<>
+						<h2 className='text-2xl font-bold leading-[145%] md:text-5xl'>{data.title}</h2>
+						<p className='text-black-secondary font-ibm text-lg leading-[150%] lg:text-xl'>
+							{data.body}
+						</p>
+					</>
+				)}
 			</div>
 			<div className='flex w-full max-w-[1440px] flex-wrap justify-center gap-4'>
 				{!isFetching &&

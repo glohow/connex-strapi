@@ -26,7 +26,8 @@
         "CM",
         "CS",
         "MO",
-        "LC"
+        "LC",
+        "L10N"
       ],
       "customField": "plugin::multi-select.multi-select"
     }

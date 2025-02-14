@@ -26,7 +26,7 @@ export interface SharedHighlightCard extends Struct.ComponentSchema {
     category: Schema.Attribute.JSON &
       Schema.Attribute.CustomField<
         'plugin::multi-select.multi-select',
-        ['MO-Game Sage', 'CM', 'CS', 'MO', 'LC']
+        ['MO-Game Sage', 'CM', 'CS', 'MO', 'LC', 'L10N']
       > &
       Schema.Attribute.DefaultTo<'[]'>;
     image: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;

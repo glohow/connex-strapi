@@ -10,12 +10,20 @@
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
   "attributes": {
     "siteName": {
       "type": "string",
       "required": true,
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "favicon": {
       "type": "media",
@@ -26,18 +34,30 @@
         "files",
         "videos"
       ],
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "siteDescription": {
       "type": "text",
       "required": true,
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "defaultSeo": {
       "type": "component",
       "repeatable": false,
       "component": "shared.seo",
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     },
     "logo": {
       "type": "media",
@@ -46,7 +66,11 @@
       "allowedTypes": [
         "images"
       ],
-      "pluginOptions": {}
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

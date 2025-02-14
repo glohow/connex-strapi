@@ -60,8 +60,8 @@ export const useLogoQuery = <
     )};
 
 export const HeroDocument = `
-    query Hero($status: PublicationStatus) {
-  hero(status: $status) {
+    query Hero($status: PublicationStatus, $locale: I18NLocaleCode) {
+  hero(status: $status, locale: $locale) {
     documentId
     description
     title
@@ -98,10 +98,10 @@ export const useHeroQuery = <
     )};
 
 export const KeySolutionDocument = `
-    query KeySolution($status: PublicationStatus) {
-  keySolution(status: $status) {
-    documentId
-    createdAt
+    query KeySolution($status: PublicationStatus, $locale: I18NLocaleCode) {
+  keySolution(status: $status, locale: $locale) {
+    title
+    body
     solutionCard {
       id
       title
@@ -118,6 +118,7 @@ export const KeySolutionDocument = `
         url
       }
     }
+    createdAt
   }
 }
     `;
@@ -137,8 +138,8 @@ export const useKeySolutionQuery = <
     )};
 
 export const ServiceDocument = `
-    query Service($status: PublicationStatus) {
-  service(status: $status) {
+    query Service($status: PublicationStatus, $locale: I18NLocaleCode) {
+  service(status: $status, locale: $locale) {
     title
     body
     services {
@@ -174,8 +175,8 @@ export const useServiceQuery = <
     )};
 
 export const ProjectDocument = `
-    query Project($status: PublicationStatus, $pagination: PaginationArg) {
-  project(status: $status) {
+    query Project($status: PublicationStatus, $locale: I18NLocaleCode, $pagination: PaginationArg) {
+  project(status: $status, locale: $locale) {
     title
     projectCarousel(pagination: $pagination) {
       name
